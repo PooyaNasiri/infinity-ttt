@@ -1,0 +1,143 @@
+:root {
+    --p1: #00f2ff;
+    --p2: #7000ff;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #020205;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Luxury Background */
+.mesh-gradient {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: 
+        radial-gradient(at 0% 0%, rgba(112, 0, 255, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(0, 242, 255, 0.15) 0px, transparent 50%);
+    z-index: -1;
+}
+
+.cursor-glow {
+    position: fixed;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+}
+
+/* Layout Styling */
+.game-container {
+    width: 90vw; max-width: 1200px;
+    display: flex; flex-direction: column; gap: 40px;
+    z-index: 10;
+}
+
+.glass-nav {
+    display: flex; justify-content: space-between;
+    padding: 20px; border-bottom: 1px solid var(--border);
+    font-family: 'Syncopate', sans-serif; letter-spacing: 5px;
+}
+
+.main-stage {
+    display: flex; justify-content: space-around; align-items: center;
+}
+
+/* HUD System */
+.player-hud {
+    text-align: center; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.3; filter: grayscale(1);
+}
+.player-hud.active { opacity: 1; filter: grayscale(0); transform: scale(1.1); }
+
+.hud-x.active { color: var(--p1); text-shadow: 0 0 20px var(--p1); }
+.hud-o.active { color: var(--p2); text-shadow: 0 0 20px var(--p2); }
+
+.symbol { font-size: 4rem; font-weight: 900; }
+.slots { display: flex; gap: 5px; margin-top: 10px; justify-content: center; }
+.slot { width: 10px; height: 10px; border: 1px solid var(--border); border-radius: 50%; }
+.slot.filled { background: currentColor; box-shadow: 0 0 10px currentColor; }
+
+/* The Board */
+.board-wrapper {
+    perspective: 1000px;
+}
+
+.board {
+    display: grid; grid-template-columns: repeat(3, 120px);
+    gap: 15px; padding: 25px;
+    background: var(--glass);
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    backdrop-filter: blur(20px);
+    transform: rotateX(10deg) rotateY(-10deg);
+    transition: 0.5s ease;
+}
+
+.board:hover { transform: rotateX(0deg) rotateY(0deg); }
+
+.cell {
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 20px;
+    display: flex; justify-content: center; align-items: center;
+    cursor: pointer; border: 1px solid transparent;
+    transition: 0.3s;
+}
+
+.cell:hover { background: rgba(255,255,255,0.07); border-color: var(--border); }
+
+/* SVG Drawing Animation */
+.cell svg { width: 60%; height: 60%; }
+.cell.x { color: var(--p1); filter: drop-shadow(0 0 10px var(--p1)); }
+.cell.o { color: var(--p2); filter: drop-shadow(0 0 10px var(--p2)); }
+
+path, circle {
+    stroke-dasharray: 300; stroke-dashoffset: 300;
+    animation: draw 0.6s ease-out forwards;
+}
+
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* Fading Mechanism */
+.fading {
+    animation: dissolve 2s infinite alternate;
+}
+
+@keyframes dissolve {
+    from { opacity: 0.8; filter: brightness(1) blur(0px); }
+    to { opacity: 0.1; filter: brightness(0.5) blur(2px); transform: scale(0.9); }
+}
+
+/* Premium Button */
+.btn-premium {
+    position: relative; background: none; border: none;
+    padding: 15px 40px; color: white; cursor: pointer;
+    font-family: 'Syncopate'; font-weight: bold;
+}
+
+.btn-blur {
+    position: absolute; inset: 0; background: linear-gradient(45deg, var(--p1), var(--p2));
+    filter: blur(15px); opacity: 0.3; border-radius: 10px; transition: 0.3s;
+}
+
+.btn-premium:hover .btn-blur { opacity: 0.8; }
+
+/* Modal */
+.modal {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    display: none; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal.active { display: flex; animation: fadeIn 0.5s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
