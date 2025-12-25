@@ -31,7 +31,7 @@ To run the Celestial Protocol locally:
 
 1.  **Clone the repository**
     ```bash
-    git clone [https://github.com/your-username/infinity-ttt.git](https://github.com/your-username/infinity-ttt.git)
+    git clone [https://github.com/PooyaNasiri/infinity-ttt.git](https://github.com/PooyaNasiri/infinity-ttt.git)
     cd infinity-ttt
     ```
 
