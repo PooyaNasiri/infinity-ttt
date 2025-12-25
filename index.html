@@ -18,38 +18,32 @@
   <div class="mesh-gradient"></div>
 
   <div class="game-container">
-    <nav class="glass-nav">
-      <div class="logo">INFINITY <span class="thin">STRIKE</span></div>
-      <div class="score" id="score-x">X : 00</div>
-      <div class="session-info" id="round-display">ROUND 01</div>
-      <div class="score" id="score-o">O : 00</div>
-    </nav>
-
-    <section class="main-stage">
+    <nav class="glass-nav">      
       <div class="player-hud p1" id="hud-x">
         <div class="label">PLAYER</div>
         <div class="symbol">X</div>
-        <div class="slots" id="slots-x">
-          <div class="slot"></div>
-          <div class="slot"></div>
-          <div class="slot"></div>
-        </div>
+        <div class="score" id="score-x">00</div>
+        <div class="slots" id="slots-x">...</div>
       </div>
+
+      <div class="session-info" id="round-display">ROUND 01</div>
+
+      <div class="player-hud p2" id="hud-o">
+        <div class="label">PLAYER</div>
+        <div class="symbol">O</div>
+        <div class="score" id="score-o">00</div>
+        <div class="slots" id="slots-o">...</div>
+      </div>
+    </nav>
+
+    <section class="main-stage">
+      
 
       <div class="board-wrapper">
         <div class="board" id="board">
         </div>
       </div>
 
-      <div class="player-hud p2" id="hud-o">
-        <div class="label">PLAYER</div>
-        <div class="symbol">O</div>
-        <div class="slots" id="slots-o">
-          <div class="slot"></div>
-          <div class="slot"></div>
-          <div class="slot"></div>
-        </div>
-      </div>
     </section>
 
     <div class="controls">
@@ -64,7 +58,7 @@
     <div class="modal-content">
       <h1 id="winner-name">DOMINATION</h1>
       <p>PLAYER [ <span id="winner-symbol">X</span> ] HAS SECURED THE GRID</p>
-      <button class="btn-premium" onclick="resetGame()">RE-ENGAGE</button>
+      <button class="btn-premium" onclick="resetGame(false)">CLICK ANYWHERE to RE-ENGAGE</button>
     </div>
   </div>
 
