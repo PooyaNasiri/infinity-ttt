@@ -5,7 +5,7 @@
     --border: rgba(255, 255, 255, 0.1);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box;  cursor: none !important;}
 body {
     background: #020205;
     color: #fff;
@@ -16,7 +16,42 @@ body {
     justify-content: center;
     align-items: center;
 }
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+    pointer-events: none; /* Critical so you can click through it to the board */
+    z-index: 9999; /* Higher than any other UI element */
+    
+    /* Bringing it to the front of the 3D plane */
+    transform: translate(-50%, -50%) translateZ(1000px); 
+    transform-style: preserve-3d;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.5s ease;
+}
 
+/* The actual X or O following the mouse */
+.cursor-glow::after {
+    content: attr(data-symbol);
+    font-family: 'Syncopate', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    opacity: 1;
+    text-shadow: 0 0 20px currentColor;
+    transition: color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Color logic for the cursor based on turn */
+.cursor-glow[data-symbol="X"]::after { color: var(--p1); }
+.cursor-glow[data-symbol="O"]::after { color: var(--p2); }
+
+/* Change the glow color to match the player */
+.cursor-glow[data-symbol="X"] { background: radial-gradient(circle, rgba(0, 242, 255, 0.08) 0%, transparent 70%); }
+.cursor-glow[data-symbol="O"] { background: radial-gradient(circle, rgba(112, 0, 255, 0.08) 0%, transparent 70%); }
 /* Luxury Background */
 .mesh-gradient {
     position: fixed;
@@ -33,7 +68,7 @@ body {
     background: radial-gradient(circle, rgba(0, 242, 255, 0.05) 0%, transparent 70%);
     pointer-events: none;
     transform: translate(-50%, -50%);
-    z-index: 0;
+    z-index: 100;
 }
 
 /* Layout Styling */
@@ -84,7 +119,13 @@ body {
     transition: 0.5s ease;
 }
 
-.board:hover { transform: rotateX(0deg) rotateY(0deg); }
+.board.tilt-x { transform: rotateX(10deg) rotateY(-12deg); }
+
+.board.tilt-o { transform: rotateX(10deg) rotateY(12deg); }
+
+.board:hover { 
+    transform: rotateX(0deg) rotateY(0deg) scale(1.02) !important; 
+}
 
 .cell {
     width: 120px; height: 120px;
@@ -111,13 +152,16 @@ path, circle {
 
 /* Fading Mechanism */
 .fading {
-    animation: dissolve 2s infinite alternate;
+    opacity: 0.25; /* Stays consistently dim */
+    filter: brightness(0.6) blur(1px);
+    transform: scale(0.92);
+    transition: all 0.5s ease; /* Smoothly dims when it becomes the oldest piece */
 }
 
-@keyframes dissolve {
+/* @keyframes dissolve {
     from { opacity: 0.8; filter: brightness(1) blur(0px); }
     to { opacity: 0.1; filter: brightness(0.5) blur(2px); transform: scale(0.9); }
-}
+} */
 
 /* Premium Button */
 .btn-premium {

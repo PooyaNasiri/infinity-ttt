@@ -55,13 +55,19 @@ function makeMove(cell, index) {
     currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     updateUI();
 }
-
 function updateUI() {
-    // HUD Active States
+    // 1. HUD Active States
     hudX.classList.toggle('active', currentPlayer === 'X');
     hudO.classList.toggle('active', currentPlayer === 'O');
 
-    // Update Slot Dots
+    // 2. NEW: Update Custom Cursor Symbol
+    cursorGlow.setAttribute('data-symbol', currentPlayer);
+
+    // 3. Dynamic Board Tilt Logic
+    board.classList.toggle('tilt-x', currentPlayer === 'X');
+    board.classList.toggle('tilt-o', currentPlayer === 'O');
+
+    // 4. Update Slot Dots
     ['X', 'O'].forEach(p => {
         const dots = document.querySelectorAll(`#slots-${p.toLowerCase()} .slot`);
         dots.forEach((dot, i) => {
@@ -69,7 +75,7 @@ function updateUI() {
         });
     });
 
-    // Handle the "Next to disappear" warning
+    // 5. Handle the "Next to disappear" warning (Static Fade)
     document.querySelectorAll('.cell').forEach(c => c.classList.remove('fading'));
     const nextQueue = queues[currentPlayer];
     if (nextQueue.length === 3) {
