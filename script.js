@@ -96,11 +96,18 @@ function endGame() {
     modal.classList.add('active');
 }
 
+// 1. At the top of your script.js, add the round counter variable
+let roundCount = 1;
+
 function resetGame() {
     queues = { 'X': [], 'O': [] };
     currentPlayer = 'X';
     gameActive = true;
     modal.classList.remove('active');
+    roundCount++;
+    const displayValue = roundCount.toString().padStart(2, '0');
+    document.getElementById('round-display').innerText = `ROUND ${displayValue}`;
+    
     init();
 }
 
