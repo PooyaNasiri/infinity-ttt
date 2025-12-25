@@ -23,7 +23,6 @@
         <div class="label">PLAYER</div>
         <div class="symbol">X</div>
         <div class="score" id="score-x">00</div>
-        <div class="slots" id="slots-x">...</div>
       </div>
 
       <div class="session-info" id="round-display">ROUND 01</div>
@@ -32,7 +31,6 @@
         <div class="label">PLAYER</div>
         <div class="symbol">O</div>
         <div class="score" id="score-o">00</div>
-        <div class="slots" id="slots-o">...</div>
       </div>
     </nav>
 
@@ -48,7 +46,7 @@
 
     <div class="controls">
       <button class="btn-premium" id="reset-btn">
-        <span class="btn-text">INITIALIZE RESET</span>
+        <span class="btn-text">RESET ROUND</span>
         <span class="btn-blur"></span>
       </button>
     </div>
@@ -56,7 +54,7 @@
 
   <div class="modal" id="modal">
     <div class="modal-content">
-      <h1 id="winner-name">DOMINATION</h1>
+      <h1 id="winner-name">WINNER</h1>
       <p>PLAYER [ <span id="winner-symbol">X</span> ] HAS SECURED THE GRID</p>
       <button class="btn-premium" onclick="resetGame(false)">CLICK ANYWHERE to RE-ENGAGE</button>
     </div>

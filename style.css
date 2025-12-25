@@ -1,3 +1,4 @@
+/* --- 1. VARIABLES & CORE --- */
 :root {
     --p1: #00f2ff;
     --p2: #7000ff;
@@ -24,7 +25,7 @@ body {
     align-items: center;
 }
 
-/* Luxury Background */
+/* --- 2. BACKGROUND & VISUAL EFFECTS --- */
 .mesh-gradient {
     position: fixed;
     top: 0; left: 0; 
@@ -69,7 +70,7 @@ canvas#particle-canvas {
 .cursor-glow[data-symbol="X"]::after { color: var(--p1); }
 .cursor-glow[data-symbol="O"]::after { color: var(--p2); }
 
-/* Layout Styling */
+/* --- 3. LAYOUT STRUCTURE --- */
 .game-container {
     width: 100%;
     max-width: 1200px;
@@ -96,13 +97,14 @@ canvas#particle-canvas {
     align-items: center;
 }
 
-/* HUD System */
+/* --- 4. HUD SYSTEM (SCORING & PIECES) --- */
 .player-hud {
     text-align: center; 
     transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     opacity: 0.3; 
     filter: grayscale(1);
 }
+
 .player-hud.active { opacity: 1; filter: grayscale(0); transform: scale(1.1); }
 .hud-x.active { color: var(--p1); text-shadow: 0 0 20px var(--p1); }
 .hud-o.active { color: var(--p2); text-shadow: 0 0 20px var(--p2); }
@@ -113,7 +115,7 @@ canvas#particle-canvas {
 .slot { width: 10px; height: 10px; border: 1px solid var(--border); border-radius: 50%; }
 .slot.filled { background: currentColor; box-shadow: 0 0 10px currentColor; }
 
-/* The Board */
+/* --- 5. THE BOARD & CELLS --- */
 .board-wrapper { perspective: 1000px; }
 .board {
     display: grid; 
@@ -158,7 +160,7 @@ path, circle {
     transition: all 0.5s ease;
 }
 
-/* Victory FX */
+/* --- 6. MODAL & VICTORY EFFECTS --- */
 .modal {
     position: fixed; 
     inset: 0; 
@@ -199,14 +201,27 @@ path, circle {
     75% { transform: translate3d(4px, 0, 0); }
 }
 
+/* --- 7. BUTTONS & CONTROLS --- */
 .btn-premium {
     position: relative; background: none; border: none;
     padding: 15px 40px; color: white; cursor: pointer;
     font-family: 'Syncopate'; font-weight: bold;
     z-index: 10000;
+    transition: transform 0.3s ease; /* Smooth hover transition */
 }
 
 .btn-blur {
     position: absolute; inset: 0; background: linear-gradient(45deg, var(--p1), var(--p2));
     filter: blur(15px); opacity: 0.3; border-radius: 10px;
+    transition: opacity 0.3s ease, filter 0.3s ease; /* Transition for hover effect */
+}
+
+/* Added Hover State for Reset Button */
+.btn-premium:hover {
+    transform: scale(1.05);
+}
+
+.btn-premium:hover .btn-blur {
+    opacity: 0.6;
+    filter: blur(25px);
 }

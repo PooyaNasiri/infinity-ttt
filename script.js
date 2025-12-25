@@ -160,5 +160,5 @@ function resetGame(nextRound = true) {
     init();
 }
 
-document.getElementById('reset-btn').onclick = resetGame(false);
+document.getElementById('reset-btn').onclick = () => resetGame(false);
 init();
