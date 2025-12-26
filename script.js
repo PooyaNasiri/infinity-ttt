@@ -39,10 +39,11 @@ function playSound(type) {
   osc.stop(audioCtx.currentTime + 0.4);
 }
 
-// Handle canvas for victory particles
 function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const width = window.visualViewport ? window.visualViewport.width : window.innerWidth;
+  const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
 }
 window.onresize = resize;
 resize();

@@ -3,7 +3,6 @@
     --p2: #7000ff;
     --glass: rgba(255, 255, 255, 0.03);
     --border: rgba(255, 255, 255, 0.1);
-    /* Dynamic Background Variables */
     --bg-accent: rgba(0, 242, 255, 0.15);
     --bg-shift: 150%;
 }
@@ -19,8 +18,8 @@ body {
     background: #020205;
     color: #fff;
     font-family: 'Inter', sans-serif;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100dvh;
+    width: 100%;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -28,52 +27,43 @@ body {
     transition: background 1s ease;
 }
 
-/* --- DYNAMIC BACKGROUND & PARTICLES --- */
 .mesh-gradient {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:
-        radial-gradient(at var(--bg-shift) 0%, var(--bg-accent) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.05) 0px, transparent 50%);
+    inset: 0;
+    background: radial-gradient(at var(--bg-shift) 0%, var(--bg-accent) 0px, transparent 50%), radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.05) 0px, transparent 50%);
     z-index: -1;
     transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- HOLOGRAPHIC HUD --- */
 .glass-nav {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     align-items: center;
-    padding: 20px 40px;
+    padding: clamp(10px, 2dvh, 20px) clamp(10px, 5vw, 40px);
     border-bottom: 1px solid var(--border);
     font-family: 'Syncopate', sans-serif;
-    letter-spacing: 5px;
+    letter-spacing: clamp(2px, 1vw, 5px);
     overflow: hidden;
     backdrop-filter: blur(10px);
 }
 
-/* Centering Logic for the Middle Block */
 .central-session-control {
     grid-column: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 30px;
+    gap: clamp(10px, 2dvh, 30px);
 }
 
 .session-info {
     margin: 0;
-    font-size: 0.9rem;
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
     text-align: center;
     white-space: nowrap;
 }
 
-/* Holographic Scanline Effect */
 .glass-nav::before {
     content: "";
     position: absolute;
@@ -96,7 +86,6 @@ body {
     }
 }
 
-/* --- IMPACT FRAMES --- */
 .impact-shake {
     animation: impact 0.05s both;
 }
@@ -128,18 +117,15 @@ body {
 
 canvas#particle-canvas {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
     z-index: -1;
     pointer-events: none;
 }
 
 .cursor-glow {
     position: fixed;
-    width: 300px;
-    height: 300px;
+    width: clamp(150px, 25vw, 300px);
+    height: clamp(150px, 25vw, 300px);
     background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
     pointer-events: none;
     transform: translate(-50%, -50%) translateZ(1000px);
@@ -152,7 +138,7 @@ canvas#particle-canvas {
 .cursor-glow::after {
     content: attr(data-symbol);
     font-family: 'Syncopate', sans-serif;
-    font-size: 2rem;
+    font-size: clamp(1rem, 4vw, 2rem);
     font-weight: 700;
     text-shadow: 0 0 20px currentColor;
 }
@@ -165,14 +151,13 @@ canvas#particle-canvas {
     color: var(--p2);
 }
 
-/* --- LAYOUT STRUCTURE --- */
 .game-container {
     width: 100%;
     max-width: 1200px;
     padding: 0 20px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: clamp(20px, 5dvh, 40px);
     z-index: 10;
 }
 
@@ -182,7 +167,6 @@ canvas#particle-canvas {
     align-items: center;
 }
 
-/* --- HUD SYSTEM --- */
 .player-hud {
     text-align: center;
     transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
@@ -190,7 +174,6 @@ canvas#particle-canvas {
     filter: grayscale(1);
 }
 
-/* Ensure left HUD and right HUD take equal space so center stays center */
 .p1 {
     justify-self: start;
 }
@@ -216,27 +199,27 @@ canvas#particle-canvas {
 }
 
 .symbol {
-    font-size: 4rem;
+    font-size: clamp(2rem, 8vw, 4rem);
     font-weight: 900;
 }
 
 .score {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 3vw, 1.5rem);
     font-weight: 700;
     margin-top: 10px;
     opacity: 0.8;
 }
 
-/* --- THE BOARD & CELLS --- */
 .board-wrapper {
     perspective: 1000px;
 }
 
 .board {
     display: grid;
-    grid-template-columns: repeat(3, 120px);
-    gap: 15px;
-    padding: 25px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(8px, 2vw, 15px);
+    padding: clamp(15px, 4vw, 25px);
+    width: min(85vw, 400px);
     background: var(--glass);
     border-radius: 30px;
     border: 1px solid var(--border);
@@ -257,10 +240,10 @@ canvas#particle-canvas {
 }
 
 .cell {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    aspect-ratio: 1/1;
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
+    border-radius: clamp(10px, 3vw, 20px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -307,7 +290,6 @@ circle {
     transition: all 0.5s ease;
 }
 
-/* --- MODAL & VICTORY EFFECTS --- */
 .modal {
     position: fixed;
     inset: 0;
@@ -325,8 +307,8 @@ circle {
 }
 
 #winner-name {
-    font-size: 5rem;
-    letter-spacing: 15px;
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    letter-spacing: clamp(5px, 2vw, 15px);
     font-family: 'Syncopate', sans-serif;
     text-shadow: 2px 0 var(--p1), -2px 0 var(--p2);
     animation: glitch 0.3s infinite;
@@ -374,15 +356,14 @@ circle {
     }
 }
 
-/* --- BUTTONS & CONTROLS --- */
 .btn-premium {
     position: relative;
     background: none;
     border: none;
-    padding: 10px 25px;
+    padding: 10px clamp(15px, 4vw, 25px);
     color: white;
-    cursor: pointer;
     font-family: 'Syncopate';
+    font-size: clamp(0.7rem, 2vw, 1rem);
     font-weight: bold;
     z-index: 10;
     transition: transform 0.3s ease;
